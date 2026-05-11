@@ -1,0 +1,4 @@
+﻿ENTANGLED_EXTERNAL_ENGINES:
+  - freeCodeCamp: https://github.com/freeCodeCamp/freeCodeCamp
+  - tensorflow-core: https://github.com/tensorflow/tensorflow
+  - tensorflow-playground: https://github.com/tensorflow/tensorflow

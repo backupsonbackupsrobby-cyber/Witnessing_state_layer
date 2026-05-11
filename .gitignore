@@ -1,0 +1,68 @@
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.env
+.env.local
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.log
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.docker/
+docker-volumes/
+.satellite-state/
+.secrets/
+*.key
+*.pem
+.cache/
+tmp/
+temp/
+
+# Platform-specific
+.env.production
+.env.staging
+.env.development
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Test coverage
+.coverage
+htmlcov/
+
+# Logs
+*.log
+logs/
+
+# Docker
+docker-volumes/
+.docker/
+
+# Sensitive data
+.secrets/
+credentials.json
+*.key
+*.pem
+.env*
+!.env.example

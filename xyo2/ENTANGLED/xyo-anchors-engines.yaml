@@ -1,0 +1,40 @@
+﻿ENTANGLED_EXTERNAL_ENGINES:
+  faker:
+    source: "pip"
+    package: "faker"
+
+  ydata_profiling:
+    source: "pip"
+    package: "ydata-profiling"
+
+  psutil:
+    source: "pip"
+    package: "psutil"
+
+  yfinance:
+    source: "pip"
+    package: "yfinance"
+
+  seaborn:
+    source: "pip"
+    package: "seaborn"
+
+  duckdb:
+    source: "pip"
+    package: "duckdb"
+
+  sentence_transformers:
+    source: "pip"
+    package: "sentence-transformers"
+
+  requests_html:
+    source: "pip"
+    package: "requests-html"
+
+  wordcloud:
+    source: "pip"
+    package: "wordcloud"
+
+  scikit_learn:
+    source: "pip"
+    package: "scikit-learn"

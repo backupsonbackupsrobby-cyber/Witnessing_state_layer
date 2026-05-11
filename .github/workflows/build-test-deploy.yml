@@ -1,0 +1,90 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Lint with flake8
+      run: |
+        # Stop on errors
+        flake8 services/ --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Warning on style issues
+        flake8 services/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    
+    - name: Run tests
+      run: |
+        docker-compose run --rm test
+    
+    - name: Build Docker images
+      run: |
+        docker-compose build
+    
+    - name: Push to Docker Hub
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: docker/build-push-action@v4
+      with:
+        push: true
+        tags: |
+          aiagency101/witnessing-state-layer:latest
+          aiagency101/witnessing-state-layer:v1.0.0
+
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Run Docker Scout
+      uses: docker/scout-action@v1
+      with:
+        command: cves
+        image: aiagency101/witnessing-state-layer:latest
+        sarif-file: scout-results.sarif
+    
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: scout-results.sarif
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to production
+      run: |
+        echo "Deploying to production..."
+        # Add your deployment steps here

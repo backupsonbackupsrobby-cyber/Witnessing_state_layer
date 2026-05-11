@@ -1,0 +1,8 @@
+﻿--- TRI-AXIS OPERATOR MAP ---
+ZHANG: Witness / Structure
+HEKE: Hinge / Boundary / 0.5 Cycle
+COOK: Expansion / Resolution
+
+CYCLE FRAME: 12.5
+HINGE: 0.5
+STATUS: @XYO_TRI_AXIS_ANCHORED

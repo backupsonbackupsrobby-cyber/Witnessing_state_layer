@@ -1,0 +1,76 @@
+# Dockerfiles for TRON-GRID services
+# All use non-root users, minimal layers, immutable state
+
+# ==================== BODY DOCKERFILE ====================
+FROM mcr.microsoft.com/windows/servercore:ltsc2022 as body
+
+# Create app user
+RUN net user /add appuser /expires:never
+RUN net localgroup Administrators appuser /add
+
+WORKDIR /app
+
+# Copy scripts
+COPY services/body/emit_body.ps1 .
+
+# Set proper permissions
+RUN icacls C:\app /grant appuser:F /t
+
+# Run as appuser
+USER appuser
+
+ENTRYPOINT ["powershell", "-NoExit", "-Command", "&", "./emit_body.ps1"]
+
+# ==================== MIND DOCKERFILE ====================
+FROM python:3.11-slim as mind
+
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+WORKDIR /app
+
+COPY services/mind/emit_mind.py .
+COPY truth_packet.py .
+
+RUN pip install --no-cache-dir -q
+
+RUN chown -R appuser:appuser /app
+
+USER appuser
+
+ENTRYPOINT ["python", "emit_mind.py"]
+
+# ==================== MOUTH DOCKERFILE ====================
+FROM mcr.microsoft.com/windows/servercore:ltsc2022 as mouth
+
+RUN net user /add appuser /expires:never
+RUN net localgroup Administrators appuser /add
+
+WORKDIR /app
+
+COPY services/mouth/emit_mouth.ps1 .
+
+RUN icacls C:\app /grant appuser:F /t
+
+USER appuser
+
+ENTRYPOINT ["powershell", "-NoExit", "-Command", "&", "./emit_mouth.ps1"]
+
+# ==================== CHAT DOCKERFILE ====================
+FROM python:3.11-slim as chat
+
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+WORKDIR /app
+
+COPY services/chat/chat_api.py .
+COPY truth_packet.py .
+
+RUN pip install --no-cache-dir -q fastapi uvicorn
+
+RUN chown -R appuser:appuser /app
+
+USER appuser
+
+EXPOSE 8000
+
+CMD ["python", "-m", "uvicorn", "chat_api:app", "--host", "0.0.0.0", "--port", "8000"]

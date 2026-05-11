@@ -1,0 +1,1090 @@
+version: '3.9'
+
+networks:
+  engine_network:
+    driver: bridge
+  identity_network:
+    driver: bridge
+  routing_network:
+    driver: bridge
+
+# Flower of Life Orchestration: 1 Center + 6 Petals (6 engines each = 43 total)
+services:
+  # ============================================================================
+  # CENTER FLOWER (1 engine) - Operator Plane & XYO State Anchor
+  # ============================================================================
+  
+  operator-sovereign:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: operator-sovereign-center
+    image: engine2/operator:latest
+    environment:
+      ENGINE_NAME: "Operator-Sovereign"
+      ENGINE_ROLE: "sovereign"
+      ENGINE_CYCLE: "truth:boundaries:allowed-states"
+      FLOWER_POSITION: "center"
+      XYO_ANCHOR_ENABLED: "true"
+      XYO_ANCHOR_DEVICE: "center"
+    ports:
+      - "5000:5000"
+    networks:
+      - engine_network
+      - identity_network
+      - routing_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - operator_state:/app/state
+      - operator_logs:/app/logs
+    user: "1000:1000"
+    restart: unless-stopped
+
+  # ============================================================================
+  # PETAL 1 (6 engines) - Tesla Engine (Motion & Energy)
+  # ============================================================================
+  
+  tesla-engine-1:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: tesla-engine-petal1-1
+    image: engine2/tesla:latest
+    environment:
+      ENGINE_NAME: "Tesla-1"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "tesla"
+      ENGINE_SUBTYPE: "motion"
+      FLOWER_POSITION: "petal-1:position-1"
+      XYO_ANCHOR_DEVICE: "tesla-1"
+      DEVICE_CLASS: "matariki"
+    ports:
+      - "5001:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - tesla1_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  tesla-engine-2:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: tesla-engine-petal1-2
+    image: engine2/tesla:latest
+    environment:
+      ENGINE_NAME: "Tesla-2"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "tesla"
+      ENGINE_SUBTYPE: "energy"
+      FLOWER_POSITION: "petal-1:position-2"
+      XYO_ANCHOR_DEVICE: "tesla-2"
+      DEVICE_CLASS: "rehua"
+    ports:
+      - "5002:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - tesla2_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  tesla-engine-3:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: tesla-engine-petal1-3
+    image: engine2/tesla:latest
+    environment:
+      ENGINE_NAME: "Tesla-3"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "tesla"
+      ENGINE_SUBTYPE: "motion"
+      FLOWER_POSITION: "petal-1:position-3"
+      XYO_ANCHOR_DEVICE: "tesla-3"
+      DEVICE_CLASS: "altair"
+    ports:
+      - "5003:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - tesla3_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  tesla-engine-4:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: tesla-engine-petal1-4
+    image: engine2/tesla:latest
+    environment:
+      ENGINE_NAME: "Tesla-4"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "tesla"
+      ENGINE_SUBTYPE: "energy"
+      FLOWER_POSITION: "petal-1:position-4"
+      XYO_ANCHOR_DEVICE: "tesla-4"
+      DEVICE_CLASS: "matariki"
+    ports:
+      - "5004:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - tesla4_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  tesla-engine-5:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: tesla-engine-petal1-5
+    image: engine2/tesla:latest
+    environment:
+      ENGINE_NAME: "Tesla-5"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "tesla"
+      ENGINE_SUBTYPE: "motion"
+      FLOWER_POSITION: "petal-1:position-5"
+      XYO_ANCHOR_DEVICE: "tesla-5"
+      DEVICE_CLASS: "rehua"
+    ports:
+      - "5005:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - tesla5_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  tesla-engine-6:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: tesla-engine-petal1-6
+    image: engine2/tesla:latest
+    environment:
+      ENGINE_NAME: "Tesla-6"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "tesla"
+      ENGINE_SUBTYPE: "energy"
+      FLOWER_POSITION: "petal-1:position-6"
+      XYO_ANCHOR_DEVICE: "tesla-6"
+      DEVICE_CLASS: "altair"
+    ports:
+      - "5006:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - tesla6_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  # ============================================================================
+  # PETAL 2 (6 engines) - Einstein Engine (Relativity & Frame)
+  # ============================================================================
+
+  einstein-engine-1:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: einstein-engine-petal2-1
+    image: engine2/einstein:latest
+    environment:
+      ENGINE_NAME: "Einstein-1"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "einstein"
+      ENGINE_SUBTYPE: "relativity"
+      FLOWER_POSITION: "petal-2:position-1"
+      XYO_ANCHOR_DEVICE: "einstein-1"
+      DEVICE_CLASS: "matariki"
+    ports:
+      - "5010:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - einstein1_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  einstein-engine-2:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: einstein-engine-petal2-2
+    image: engine2/einstein:latest
+    environment:
+      ENGINE_NAME: "Einstein-2"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "einstein"
+      ENGINE_SUBTYPE: "frame"
+      FLOWER_POSITION: "petal-2:position-2"
+      XYO_ANCHOR_DEVICE: "einstein-2"
+      DEVICE_CLASS: "rehua"
+    ports:
+      - "5011:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - einstein2_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  einstein-engine-3:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: einstein-engine-petal2-3
+    image: engine2/einstein:latest
+    environment:
+      ENGINE_NAME: "Einstein-3"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "einstein"
+      ENGINE_SUBTYPE: "relativity"
+      FLOWER_POSITION: "petal-2:position-3"
+      XYO_ANCHOR_DEVICE: "einstein-3"
+      DEVICE_CLASS: "altair"
+    ports:
+      - "5012:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - einstein3_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  einstein-engine-4:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: einstein-engine-petal2-4
+    image: engine2/einstein:latest
+    environment:
+      ENGINE_NAME: "Einstein-4"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "einstein"
+      ENGINE_SUBTYPE: "frame"
+      FLOWER_POSITION: "petal-2:position-4"
+      XYO_ANCHOR_DEVICE: "einstein-4"
+      DEVICE_CLASS: "matariki"
+    ports:
+      - "5013:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - einstein4_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  einstein-engine-5:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: einstein-engine-petal2-5
+    image: engine2/einstein:latest
+    environment:
+      ENGINE_NAME: "Einstein-5"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "einstein"
+      ENGINE_SUBTYPE: "relativity"
+      FLOWER_POSITION: "petal-2:position-5"
+      XYO_ANCHOR_DEVICE: "einstein-5"
+      DEVICE_CLASS: "rehua"
+    ports:
+      - "5014:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - einstein5_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  einstein-engine-6:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: einstein-engine-petal2-6
+    image: engine2/einstein:latest
+    environment:
+      ENGINE_NAME: "Einstein-6"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "einstein"
+      ENGINE_SUBTYPE: "frame"
+      FLOWER_POSITION: "petal-2:position-6"
+      XYO_ANCHOR_DEVICE: "einstein-6"
+      DEVICE_CLASS: "altair"
+    ports:
+      - "5015:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - einstein6_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  # ============================================================================
+  # PETAL 3 (6 engines) - Newton Engine (Force & Constraint)
+  # ============================================================================
+
+  newton-engine-1:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: newton-engine-petal3-1
+    image: engine2/newton:latest
+    environment:
+      ENGINE_NAME: "Newton-1"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "newton"
+      ENGINE_SUBTYPE: "force"
+      FLOWER_POSITION: "petal-3:position-1"
+      XYO_ANCHOR_DEVICE: "newton-1"
+      DEVICE_CLASS: "matariki"
+    ports:
+      - "5020:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - newton1_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  newton-engine-2:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: newton-engine-petal3-2
+    image: engine2/newton:latest
+    environment:
+      ENGINE_NAME: "Newton-2"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "newton"
+      ENGINE_SUBTYPE: "constraint"
+      FLOWER_POSITION: "petal-3:position-2"
+      XYO_ANCHOR_DEVICE: "newton-2"
+      DEVICE_CLASS: "rehua"
+    ports:
+      - "5021:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - newton2_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  newton-engine-3:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: newton-engine-petal3-3
+    image: engine2/newton:latest
+    environment:
+      ENGINE_NAME: "Newton-3"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "newton"
+      ENGINE_SUBTYPE: "force"
+      FLOWER_POSITION: "petal-3:position-3"
+      XYO_ANCHOR_DEVICE: "newton-3"
+      DEVICE_CLASS: "altair"
+    ports:
+      - "5022:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - newton3_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  newton-engine-4:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: newton-engine-petal3-4
+    image: engine2/newton:latest
+    environment:
+      ENGINE_NAME: "Newton-4"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "newton"
+      ENGINE_SUBTYPE: "constraint"
+      FLOWER_POSITION: "petal-3:position-4"
+      XYO_ANCHOR_DEVICE: "newton-4"
+      DEVICE_CLASS: "matariki"
+    ports:
+      - "5023:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - newton4_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  newton-engine-5:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: newton-engine-petal3-5
+    image: engine2/newton:latest
+    environment:
+      ENGINE_NAME: "Newton-5"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "newton"
+      ENGINE_SUBTYPE: "force"
+      FLOWER_POSITION: "petal-3:position-5"
+      XYO_ANCHOR_DEVICE: "newton-5"
+      DEVICE_CLASS: "rehua"
+    ports:
+      - "5024:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - newton5_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  newton-engine-6:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: newton-engine-petal3-6
+    image: engine2/newton:latest
+    environment:
+      ENGINE_NAME: "Newton-6"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "newton"
+      ENGINE_SUBTYPE: "constraint"
+      FLOWER_POSITION: "petal-3:position-6"
+      XYO_ANCHOR_DEVICE: "newton-6"
+      DEVICE_CLASS: "altair"
+    ports:
+      - "5025:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - newton6_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  # ============================================================================
+  # PETAL 4 (6 engines) - Heke Engine (Navigation & Sovereignty)
+  # ============================================================================
+
+  heke-engine-1:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: heke-engine-petal4-1
+    image: engine2/heke:latest
+    environment:
+      ENGINE_NAME: "Heke-1"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "heke"
+      ENGINE_SUBTYPE: "navigation"
+      FLOWER_POSITION: "petal-4:position-1"
+      XYO_ANCHOR_DEVICE: "heke-1"
+      DEVICE_CLASS: "matariki"
+    ports:
+      - "5030:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - heke1_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  heke-engine-2:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: heke-engine-petal4-2
+    image: engine2/heke:latest
+    environment:
+      ENGINE_NAME: "Heke-2"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "heke"
+      ENGINE_SUBTYPE: "sovereignty"
+      FLOWER_POSITION: "petal-4:position-2"
+      XYO_ANCHOR_DEVICE: "heke-2"
+      DEVICE_CLASS: "rehua"
+    ports:
+      - "5031:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - heke2_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  heke-engine-3:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: heke-engine-petal4-3
+    image: engine2/heke:latest
+    environment:
+      ENGINE_NAME: "Heke-3"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "heke"
+      ENGINE_SUBTYPE: "navigation"
+      FLOWER_POSITION: "petal-4:position-3"
+      XYO_ANCHOR_DEVICE: "heke-3"
+      DEVICE_CLASS: "altair"
+    ports:
+      - "5032:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - heke3_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  heke-engine-4:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: heke-engine-petal4-4
+    image: engine2/heke:latest
+    environment:
+      ENGINE_NAME: "Heke-4"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "heke"
+      ENGINE_SUBTYPE: "sovereignty"
+      FLOWER_POSITION: "petal-4:position-4"
+      XYO_ANCHOR_DEVICE: "heke-4"
+      DEVICE_CLASS: "matariki"
+    ports:
+      - "5033:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - heke4_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  heke-engine-5:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: heke-engine-petal4-5
+    image: engine2/heke:latest
+    environment:
+      ENGINE_NAME: "Heke-5"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "heke"
+      ENGINE_SUBTYPE: "navigation"
+      FLOWER_POSITION: "petal-4:position-5"
+      XYO_ANCHOR_DEVICE: "heke-5"
+      DEVICE_CLASS: "rehua"
+    ports:
+      - "5034:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - heke5_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  heke-engine-6:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: heke-engine-petal4-6
+    image: engine2/heke:latest
+    environment:
+      ENGINE_NAME: "Heke-6"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "heke"
+      ENGINE_SUBTYPE: "sovereignty"
+      FLOWER_POSITION: "petal-4:position-6"
+      XYO_ANCHOR_DEVICE: "heke-6"
+      DEVICE_CLASS: "altair"
+    ports:
+      - "5035:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - heke6_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  # ============================================================================
+  # PETAL 5 (6 engines) - Cook Engine (Mapping & Expansion)
+  # ============================================================================
+
+  cook-engine-1:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: cook-engine-petal5-1
+    image: engine2/cook:latest
+    environment:
+      ENGINE_NAME: "Cook-1"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "cook"
+      ENGINE_SUBTYPE: "mapping"
+      FLOWER_POSITION: "petal-5:position-1"
+      XYO_ANCHOR_DEVICE: "cook-1"
+      DEVICE_CLASS: "matariki"
+    ports:
+      - "5040:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - cook1_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  cook-engine-2:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: cook-engine-petal5-2
+    image: engine2/cook:latest
+    environment:
+      ENGINE_NAME: "Cook-2"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "cook"
+      ENGINE_SUBTYPE: "expansion"
+      FLOWER_POSITION: "petal-5:position-2"
+      XYO_ANCHOR_DEVICE: "cook-2"
+      DEVICE_CLASS: "rehua"
+    ports:
+      - "5041:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - cook2_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  cook-engine-3:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: cook-engine-petal5-3
+    image: engine2/cook:latest
+    environment:
+      ENGINE_NAME: "Cook-3"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "cook"
+      ENGINE_SUBTYPE: "mapping"
+      FLOWER_POSITION: "petal-5:position-3"
+      XYO_ANCHOR_DEVICE: "cook-3"
+      DEVICE_CLASS: "altair"
+    ports:
+      - "5042:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - cook3_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  cook-engine-4:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: cook-engine-petal5-4
+    image: engine2/cook:latest
+    environment:
+      ENGINE_NAME: "Cook-4"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "cook"
+      ENGINE_SUBTYPE: "expansion"
+      FLOWER_POSITION: "petal-5:position-4"
+      XYO_ANCHOR_DEVICE: "cook-4"
+      DEVICE_CLASS: "matariki"
+    ports:
+      - "5043:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - cook4_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  cook-engine-5:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: cook-engine-petal5-5
+    image: engine2/cook:latest
+    environment:
+      ENGINE_NAME: "Cook-5"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "cook"
+      ENGINE_SUBTYPE: "mapping"
+      FLOWER_POSITION: "petal-5:position-5"
+      XYO_ANCHOR_DEVICE: "cook-5"
+      DEVICE_CLASS: "rehua"
+    ports:
+      - "5044:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - cook5_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  cook-engine-6:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: cook-engine-petal5-6
+    image: engine2/cook:latest
+    environment:
+      ENGINE_NAME: "Cook-6"
+      ENGINE_PLANE: "engine"
+      ENGINE_TYPE: "cook"
+      ENGINE_SUBTYPE: "expansion"
+      FLOWER_POSITION: "petal-5:position-6"
+      XYO_ANCHOR_DEVICE: "cook-6"
+      DEVICE_CLASS: "altair"
+    ports:
+      - "5045:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - cook6_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  # ============================================================================
+  # PETAL 6 (6 engines) - Identity & Routing Planes
+  # ============================================================================
+
+  identity-gateway:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: identity-gateway-petal6-1
+    image: engine2/identity:latest
+    environment:
+      ENGINE_NAME: "Identity-Gateway"
+      ENGINE_PLANE: "identity"
+      ENGINE_TYPE: "identity"
+      ENGINE_ROLE: "gateway"
+      FLOWER_POSITION: "petal-6:position-1"
+      IDENTITY_SCRIPTS: "hiragana:katakana:kanji:maori:fijian"
+      XYO_ANCHOR_DEVICE: "identity-gateway"
+    ports:
+      - "5050:5000"
+    networks:
+      - identity_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - identity_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  routing-dnssec:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: routing-dnssec-petal6-2
+    image: engine2/routing:latest
+    environment:
+      ENGINE_NAME: "Routing-DNSSEC"
+      ENGINE_PLANE: "routing"
+      ENGINE_TYPE: "routing"
+      ENGINE_ROLE: "dnssec"
+      FLOWER_POSITION: "petal-6:position-2"
+      DNS_MODE: "dnssec"
+      PUBLIC_DOMAIN: "robdoe.com"
+      PRIVATE_DOMAIN: "robertdoe.pw"
+      XYO_ANCHOR_DEVICE: "routing-dnssec"
+    ports:
+      - "5051:5000"
+      - "53:53/udp"
+    networks:
+      - routing_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - routing_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  routing-zerotrust:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: routing-zerotrust-petal6-3
+    image: engine2/routing:latest
+    environment:
+      ENGINE_NAME: "Routing-ZeroTrust"
+      ENGINE_PLANE: "routing"
+      ENGINE_TYPE: "routing"
+      ENGINE_ROLE: "zerotrust"
+      FLOWER_POSITION: "petal-6:position-3"
+      ZEROTRUST_ENABLED: "true"
+      XYO_ANCHOR_DEVICE: "routing-zerotrust"
+    ports:
+      - "5052:5000"
+    networks:
+      - routing_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - routing_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  routing-cloudflare:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: routing-cloudflare-petal6-4
+    image: engine2/routing:latest
+    environment:
+      ENGINE_NAME: "Routing-Cloudflare"
+      ENGINE_PLANE: "routing"
+      ENGINE_TYPE: "routing"
+      ENGINE_ROLE: "cloudflare"
+      FLOWER_POSITION: "petal-6:position-4"
+      CLOUDFLARE_TUNNEL_ENABLED: "true"
+      XYO_ANCHOR_DEVICE: "routing-cloudflare"
+    ports:
+      - "5053:5000"
+    networks:
+      - routing_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - routing_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  pulse-timing:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: pulse-timing-petal6-5
+    image: engine2/pulse:latest
+    environment:
+      ENGINE_NAME: "Pulse-Timing"
+      ENGINE_PLANE: "pulse"
+      ENGINE_TYPE: "pulse"
+      FLOWER_POSITION: "petal-6:position-5"
+      PULSE_UI: "0.02"
+      PULSE_TACTILE: "0.05"
+      PULSE_WEARABLE: "0.075"
+      PULSE_NETWORK: "0.15"
+      XYO_ANCHOR_DEVICE: "pulse-timing"
+    ports:
+      - "5054:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - pulse_state:/app/state
+    user: "1000:1000"
+    restart: unless-stopped
+
+  audit-trail:
+    build:
+      context: ./containers
+      dockerfile: Dockerfile.engine-base
+    container_name: audit-trail-petal6-6
+    image: engine2/audit:latest
+    environment:
+      ENGINE_NAME: "Audit-Trail"
+      ENGINE_PLANE: "operator"
+      ENGINE_TYPE: "audit"
+      FLOWER_POSITION: "petal-6:position-6"
+      AUDIT_LOG_LEVEL: "info"
+      XYO_ANCHOR_DEVICE: "audit-trail"
+    ports:
+      - "5055:5000"
+    networks:
+      - engine_network
+    depends_on:
+      operator-sovereign:
+        condition: service_healthy
+    volumes:
+      - audit_logs:/app/logs
+    user: "1000:1000"
+    restart: unless-stopped
+
+volumes:
+  operator_state:
+    driver: local
+  operator_logs:
+    driver: local
+  
+  tesla1_state:
+    driver: local
+  tesla2_state:
+    driver: local
+  tesla3_state:
+    driver: local
+  tesla4_state:
+    driver: local
+  tesla5_state:
+    driver: local
+  tesla6_state:
+    driver: local
+  
+  einstein1_state:
+    driver: local
+  einstein2_state:
+    driver: local
+  einstein3_state:
+    driver: local
+  einstein4_state:
+    driver: local
+  einstein5_state:
+    driver: local
+  einstein6_state:
+    driver: local
+  
+  newton1_state:
+    driver: local
+  newton2_state:
+    driver: local
+  newton3_state:
+    driver: local
+  newton4_state:
+    driver: local
+  newton5_state:
+    driver: local
+  newton6_state:
+    driver: local
+  
+  heke1_state:
+    driver: local
+  heke2_state:
+    driver: local
+  heke3_state:
+    driver: local
+  heke4_state:
+    driver: local
+  heke5_state:
+    driver: local
+  heke6_state:
+    driver: local
+  
+  cook1_state:
+    driver: local
+  cook2_state:
+    driver: local
+  cook3_state:
+    driver: local
+  cook4_state:
+    driver: local
+  cook5_state:
+    driver: local
+  cook6_state:
+    driver: local
+  
+  identity_state:
+    driver: local
+  routing_state:
+    driver: local
+  pulse_state:
+    driver: local
+  audit_logs:
+    driver: local

@@ -1,0 +1,43 @@
+﻿=== XYO2  HEKE  SYMPY PIPELINE MAP ===
+
+ROOTS
+-----
+GridRoot    : C:\tron-grid
+XYO2 Root   : C:\tron-grid\xyo2
+LatticeRoot : C:\tron-grid\XYO_UNIVERSAL_GRID\WINDOWS_LATTICE
+MindRoot    : C:\tron-grid\services\mind
+PythonRoot  : C:\tron-grid\python-portable
+
+TRI-AXIS ROLES
+--------------
+ZHANG (張)  : Structure / Witness / Integration
+HEKE (境)   : Boundary / Door Hinge / Handoff
+COOK (陽)   : Expansion / SymPy / Symbolic Engine
+
+STAGE 1  XYO2 (ZHANG / WITNESS)
+--------------------------------
+Function  : H_xyo2(S) -> 
+Output    : witness_packet.json
+Location  : C:\tron-grid\xyo2\ENTANGLED\witness_packet.json
+
+STAGE 2  HEKE (HINGE / DOOR)
+-----------------------------
+Function  : D_hinge() -> Z
+Action    : Move/transform witness into SymPy input
+Location  : C:\tron-grid\XYO_UNIVERSAL_GRID\WINDOWS_LATTICE\W_04_BRIDGE\HINGE_EVENT.log, C:\tron-grid\services\mind\sympy_input.json
+
+STAGE 3  SYMPY (COOK / SYMBOLIC)
+---------------------------------
+Function  : Φ_symPy(Z) -> Σ_Py
+Input     : sympy_input.json
+Output    : sympy_output.json
+Location  : C:\tron-grid\services\mind\sympy_input.json, C:\tron-grid\services\mind\sympy_output.json
+
+PIPELINE SUMMARY
+----------------
+S
+ -> H_xyo2(S)          = ZHANG / XYO2 witness
+ -> D_hinge()         = HEKE  / door hinge
+ -> Φ_symPy(Z)         = COOK  / SymPy expansion
+
+END OF MAP

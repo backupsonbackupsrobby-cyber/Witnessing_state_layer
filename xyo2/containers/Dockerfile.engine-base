@@ -1,0 +1,64 @@
+#syntax=docker/dockerfile:1
+
+# ===================================================================
+# ENGINE2 Base Engine - DHI Migration with Flower of Life Architecture
+# ===================================================================
+# Multi-stage build optimized for DHI security and non-root execution
+# Supports ABOVE_OS_LAYER orchestration with XYO cryptographic anchoring
+
+# === Build Stage: Compile and install dependencies ===
+FROM dhi.io/python:3.13-alpine3.22-dev AS builder
+
+WORKDIR /app
+
+# Install build dependencies for XYO anchoring and cryptographic operations
+RUN pip install --no-cache-dir \
+    flask==3.0.0 \
+    requests==2.31.0 \
+    pycryptodome==3.19.0 \
+    pydantic==2.5.0 \
+    python-dateutil==2.8.2 \
+    pytz==2023.3.post1 \
+    pyyaml==6.0.1
+
+# === Final Runtime Stage: Minimal security-focused image ===
+FROM dhi.io/python:3.13-alpine3.22
+
+# Metadata
+LABEL maintainer="ENGINE2 Operator Team"
+LABEL description="ENGINE2 XYO-anchored distributed engine with Flower of Life topology"
+LABEL architecture="ABOVE_OS_LAYER"
+
+# Non-root user is already set in DHI image (python user)
+WORKDIR /app
+
+# Environment variables for multi-plane configuration
+ENV FLASK_ENV=production
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Identity plane variables for multi-script support
+ENV IDENTITY_PLANE_SCRIPTS="hiragana:katakana:kanji:maori:fijian"
+ENV DEVICE_CLASSIFICATION="matariki:rehua:altair"
+ENV PUBLIC_DOMAIN="robdoe.com"
+ENV PRIVATE_DOMAIN="robertdoe.pw"
+
+# Pulse plane timing constants (seconds)
+ENV PULSE_UI=0.02
+ENV PULSE_TACTILE=0.05
+ENV PULSE_WEARABLE=0.075
+ENV PULSE_NETWORK=0.15
+
+# Copy dependencies from builder stage
+COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
+
+# Health check for Flower of Life cycle completion
+HEALTHCHECK --interval=5s --timeout=3s --start-period=10s --retries=3 \
+    CMD python -c "import socket; socket.create_connection(('localhost', 5000), timeout=2)"
+
+# Expose application port (>1024 for non-root execution)
+EXPOSE 5000
+
+# Default entrypoint for engine operations
+ENTRYPOINT ["python"]
+CMD ["-m", "flask", "run", "--host=0.0.0.0", "--port=5000"]

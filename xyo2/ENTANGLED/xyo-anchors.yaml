@@ -1,0 +1,12 @@
+﻿ENTANGLED_EXTERNAL_ENGINES:
+  freeCodeCamp:
+    url: "https://github.com/freeCodeCamp/freeCodeCamp"
+    anchor: "remote"
+
+  tensorflow-core:
+    url: "https://github.com/tensorflow/tensorflow"
+    anchor: "pip_version"
+
+  tensorflow-playground:
+    url: "https://github.com/tensorflow/tensorflow"
+    anchor: "pip_version"

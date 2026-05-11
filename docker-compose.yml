@@ -1,0 +1,83 @@
+version: "3.9"
+
+services:
+  # BODY: Raw sensor perception packets
+  body:
+    image: mcr.microsoft.com/windows/servercore:ltsc2022
+    container_name: tron-body
+    volumes:
+      - tron-lattice:C:\tron-grid\XYO_UNIVERSAL_GRID
+      - ./services/body/emit_body.ps1:C:\scripts\emit_body.ps1
+    working_dir: C:\scripts
+    command: powershell -NoExit -Command "& { . C:\scripts\emit_body.ps1 }"
+    environment:
+      - LOG_PATH=C:\tron-grid\XYO_UNIVERSAL_GRID\WINDOWS_LATTICE\W_40_TRON_TRUTH_PACKETS
+    networks:
+      - tron-grid
+
+  # MIND: Interpretation & analysis (linked to body)
+  mind:
+    image: python:3.11-slim
+    container_name: tron-mind
+    volumes:
+      - tron-lattice:C:\tron-grid\XYO_UNIVERSAL_GRID
+      - ./services/mind/emit_mind.py:/scripts/emit_mind.py
+      - ./truth_packet.py:/scripts/truth_packet.py
+    working_dir: /scripts
+    command: python emit_mind.py
+    environment:
+      - STATE_ROOT=C:/tron-grid/XYO_UNIVERSAL_GRID/WINDOWS_LATTICE
+    networks:
+      - tron-grid
+    depends_on:
+      - body
+
+  # MOUTH: Action & Truth Receipt (linked to mind)
+  mouth:
+    image: mcr.microsoft.com/windows/servercore:ltsc2022
+    container_name: tron-mouth
+    volumes:
+      - tron-lattice:C:\tron-grid\XYO_UNIVERSAL_GRID
+      - ./services/mouth/emit_mouth.ps1:C:\scripts\emit_mouth.ps1
+    working_dir: C:\scripts
+    command: powershell -NoExit -Command "& { . C:\scripts\emit_mouth.ps1 }"
+    environment:
+      - LOG_PATH=C:\tron-grid\XYO_UNIVERSAL_GRID\WINDOWS_LATTICE\W_40_TRON_TRUTH_PACKETS
+    networks:
+      - tron-grid
+    depends_on:
+      - mind
+
+  # CHAT: Read-only AI agent interface (lattice introspection)
+  chat:
+    image: python:3.11-slim
+    container_name: tron-chat
+    volumes:
+      - tron-lattice:C:\tron-grid\XYO_UNIVERSAL_GRID
+      - ./services/chat/chat_api.py:/scripts/chat_api.py
+    working_dir: /scripts
+    ports:
+      - "8000:8000"
+    command: >
+      bash -c "pip install fastapi uvicorn -q && 
+               python -m uvicorn chat_api:app --host 0.0.0.0 --port 8000"
+    environment:
+      - LATTICE_ROOT=C:/tron-grid/XYO_UNIVERSAL_GRID/WINDOWS_LATTICE
+    networks:
+      - tron-grid
+    depends_on:
+      - body
+      - mind
+      - mouth
+
+volumes:
+  tron-lattice:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: C:\tron-grid\XYO_UNIVERSAL_GRID
+
+networks:
+  tron-grid:
+    driver: bridge

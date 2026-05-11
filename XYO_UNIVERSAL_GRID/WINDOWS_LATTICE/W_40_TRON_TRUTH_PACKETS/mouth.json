@@ -1,0 +1,39 @@
+{
+  "service": "mouth",
+  "version": "1.0.0",
+  "timestamp": {
+    "timestamp_utc": "2026-05-11T18:08:56.004058+00:00",
+    "timestamp_unix": "1778522936",
+    "authority": "RFC3161-GPS-Backed",
+    "signed": false,
+    "hostname": "AiGhostBot"
+  },
+  "data": {
+    "action": "notify",
+    "message": "All systems nominal",
+    "priority": "info"
+  },
+  "crypto": {
+    "data_sha256": "634a7d8d4c70c19602c1cdc6a4281b02724f71c212a128ae12fbe10634d06259",
+    "continuity_hash": "6728706520b5cbfcd32da9690698c51bb0ee48be6fb1e75e8e87627862db79df",
+    "genesis_hash": "e14f9a8d2c7b5e3f1a9d4c8b2e6f7a3d",
+    "linked_to": "f0b55192b0eb8e73acf292b50ef0dc1b137a2ddecc8fb5b4c59f40146a8b80bb"
+  },
+  "lattice": {
+    "state_dir": "C:\\tron-grid\\XYO_UNIVERSAL_GRID\\WINDOWS_LATTICE\\W_40_TRON_TRUTH_PACKETS",
+    "service_layer": "W_40_TRON_TRUTH_PACKETS",
+    "immutable": true
+  },
+  "truth_receipt": {
+    "rfc3161_timestamp": {
+      "timestamp_utc": "2026-05-11T18:08:56.004058+00:00",
+      "timestamp_unix": "1778522936",
+      "authority": "RFC3161-GPS-Backed",
+      "signed": false,
+      "hostname": "AiGhostBot"
+    },
+    "genesis_hash_match": "e14f9a8d2c7b5e3f1a9d4c8b2e6f7a3d",
+    "bom_aligned": true,
+    "court_admissible": true
+  }
+}
