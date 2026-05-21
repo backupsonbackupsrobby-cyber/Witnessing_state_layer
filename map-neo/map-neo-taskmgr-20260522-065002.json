@@ -1,0 +1,161 @@
+﻿{
+    "timestamp":  "20260522-065002",
+    "domain":  "MAP-NEO",
+    "neo_id":  "3a59e50f-2ace-49ca-8d9b-064e6f2a1223",
+    "projection":  {
+                       "anchor":  "1D7E94B4C288F9404D95DDC97E1AA9DCA184E40C18FAE5525EC69EBA4F04A32D",
+                       "processes":  [
+                                         {
+                                             "name":  "mscopilot",
+                                             "pid":  5684,
+                                             "cpu":  401.703125,
+                                             "memMB":  617.76
+                                         },
+                                         {
+                                             "name":  "MsMpEng",
+                                             "pid":  6104,
+                                             "cpu":  354.5,
+                                             "memMB":  247.12
+                                         },
+                                         {
+                                             "name":  "System",
+                                             "pid":  4,
+                                             "cpu":  302.34375,
+                                             "memMB":  0.15
+                                         },
+                                         {
+                                             "name":  "dwm",
+                                             "pid":  2624,
+                                             "cpu":  268.484375,
+                                             "memMB":  134.89
+                                         },
+                                         {
+                                             "name":  "mscopilot",
+                                             "pid":  8092,
+                                             "cpu":  115.125,
+                                             "memMB":  200.59
+                                         },
+                                         {
+                                             "name":  "EoAExperiences",
+                                             "pid":  13236,
+                                             "cpu":  89.765625,
+                                             "memMB":  21.8
+                                         },
+                                         {
+                                             "name":  "PAD.Console.Host",
+                                             "pid":  11108,
+                                             "cpu":  73.3125,
+                                             "memMB":  315.61
+                                         },
+                                         {
+                                             "name":  "PAD.AutomationServer",
+                                             "pid":  7892,
+                                             "cpu":  65.75,
+                                             "memMB":  87.77
+                                         },
+                                         {
+                                             "name":  "cloudflared",
+                                             "pid":  1408,
+                                             "cpu":  65.21875,
+                                             "memMB":  33.33
+                                         },
+                                         {
+                                             "name":  "mscopilot",
+                                             "pid":  15900,
+                                             "cpu":  62.21875,
+                                             "memMB":  256.71
+                                         },
+                                         {
+                                             "name":  "svchost",
+                                             "pid":  4176,
+                                             "cpu":  61.0625,
+                                             "memMB":  12.01
+                                         },
+                                         {
+                                             "name":  "msedge",
+                                             "pid":  9588,
+                                             "cpu":  56.34375,
+                                             "memMB":  312
+                                         },
+                                         {
+                                             "name":  "explorer",
+                                             "pid":  160,
+                                             "cpu":  54.171875,
+                                             "memMB":  285.55
+                                         },
+                                         {
+                                             "name":  "ctfmon",
+                                             "pid":  10728,
+                                             "cpu":  52.578125,
+                                             "memMB":  76.18
+                                         },
+                                         {
+                                             "name":  "WindowsSlimmer",
+                                             "pid":  13288,
+                                             "cpu":  52.265625,
+                                             "memMB":  7.34
+                                         },
+                                         {
+                                             "name":  "WindowsTerminal",
+                                             "pid":  16928,
+                                             "cpu":  52.109375,
+                                             "memMB":  123.23
+                                         },
+                                         {
+                                             "name":  "iCloudHome",
+                                             "pid":  16096,
+                                             "cpu":  43.453125,
+                                             "memMB":  94.3
+                                         },
+                                         {
+                                             "name":  "svchost",
+                                             "pid":  4676,
+                                             "cpu":  41.578125,
+                                             "memMB":  18.65
+                                         },
+                                         {
+                                             "name":  "msedge",
+                                             "pid":  1984,
+                                             "cpu":  39.234375,
+                                             "memMB":  217.14
+                                         },
+                                         {
+                                             "name":  "svchost",
+                                             "pid":  1500,
+                                             "cpu":  37.46875,
+                                             "memMB":  15.68
+                                         },
+                                         {
+                                             "name":  "svchost",
+                                             "pid":  5480,
+                                             "cpu":  36.71875,
+                                             "memMB":  38.78
+                                         },
+                                         {
+                                             "name":  "lsass",
+                                             "pid":  1184,
+                                             "cpu":  35.546875,
+                                             "memMB":  26.32
+                                         },
+                                         {
+                                             "name":  "powershell",
+                                             "pid":  3368,
+                                             "cpu":  33.421875,
+                                             "memMB":  156.39
+                                         },
+                                         {
+                                             "name":  "msedge",
+                                             "pid":  11164,
+                                             "cpu":  30.78125,
+                                             "memMB":  174.88
+                                         },
+                                         {
+                                             "name":  "WebManagement",
+                                             "pid":  6084,
+                                             "cpu":  27.703125,
+                                             "memMB":  16.71
+                                         }
+                                     ],
+                       "type":  "task-manager"
+                   }
+}
