@@ -9,7 +9,7 @@ $ImmunityTelemetry = [PSCustomObject]@{
     IgnitionSystem    = "COMPRESSION_IGNITION_HCCI_PLUGLESS"
     FrontEV_Converters= "INDEPENDENT_DUAL_WHEEL_DC_DC"
     RearEngineProfile = "4GR_FSE_V6_DIESEL_DI_CONVERSION"
-    RawEcuPacketHex   = "47520B3B967306DF0C0C324B96011C5D"
-    CalculatedWavePsi = 0.00057075
-    LastSyncTimestamp = "2026-07-15 09:07:26"
+    RawEcuPacketHex   = "47523138967306DF0C0C324B96011C5D"
+    CalculatedWavePsi = 0.00059925
+    LastSyncTimestamp = "2026-07-15 09:07:48"
 }
