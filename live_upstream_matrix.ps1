@@ -3,7 +3,7 @@ $ImmunityTelemetry = [PSCustomObject]@{
     SystemTarget      = "WITNESSING_STATE_LAYER_SECURED"
     FuelProfile       = "ETHANOL_E85_ATOMIZED"
     NozzleGeometry    = "2.0_TO_7.0_RIGHT_ANGLE_3.5"
-    CalculatedWavePsi = 0.00233037
-    RawEcuPacketHex   = "4752193E140723930C0C324B96011C5D"
-    LastSyncTimestamp = "2026-07-15 08:50:30"
+    CalculatedWavePsi = 0.0026925156
+    RawEcuPacketHex   = "4752313B140723930C0C324B96011C5D"
+    LastSyncTimestamp = "2026-07-15 08:50:52"
 }
