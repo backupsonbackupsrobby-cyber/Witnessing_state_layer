@@ -1,9 +1,15 @@
-﻿# Global Identity State Snapshot — Active Synchronized Matrix
+﻿# Global Identity State Snapshot — 2006 IS250 F-Sport Master Monolith Blueprint
 $ImmunityTelemetry = [PSCustomObject]@{
     SystemTarget      = "WITNESSING_STATE_LAYER_SECURED"
-    FuelProfile       = "ETHANOL_E85_ATOMIZED"
-    NozzleGeometry    = "2.0_TO_7.0_RIGHT_ANGLE_3.5"
-    CalculatedWavePsi = 0.00217602
-    RawEcuPacketHex   = "47521939140723930C0C324B96011C5D"
-    LastSyncTimestamp = "2026-07-15 08:54:23"
+    ChassisPlatform   = "LEXUS_GSE20_2006_FSPORT"
+    PrototypeLane     = "TTR_AWD_HYBRID_RESTOMOD_KINETIC_BOOST"
+    SuspensionType    = "STOCK_ONE_PIECE_DOUBLE_WISHBONE"
+    IntakeDefense     = "DUAL_STEEL_WOOL_CATCH_CANS_ACTIVE"
+    TelemetryMonitors = "6_HIGH_PRESSURE_DASH_GAUGES"
+    IgnitionSystem    = "COMPRESSION_IGNITION_HCCI_PLUGLESS"
+    FrontEV_Converters= "INDEPENDENT_DUAL_WHEEL_DC_DC"
+    RearEngineProfile = "4GR_FSE_V6_DIESEL_DI_CONVERSION"
+    RawEcuPacketHex   = "4752133B967306DF0C0C324B96011C5D"
+    CalculatedWavePsi = 0.00057675
+    LastSyncTimestamp = "2026-07-15 08:54:37"
 }
