@@ -11,12 +11,12 @@ $ImmunityTelemetry = [PSCustomObject]@{
     IgnitionSystem    = "ASYMMETRICAL_SPLIT_CYCLE_2_SPARK_4_HCCI"
     DrivetrainConfig  = "COMPRESSION_RELEASE_DISTRIBUTOR"
     FrontEV_Converters= "INDEPENDENT_DUAL_WHEEL_DC_DC"
-    FrontDiffDC_DC    = "ACTIVE_ENERGY_RECOVERY_42%"
-    RearDiffDC_DC     = "ACTIVE_ENERGY_RECOVERY_79%"
+    FrontDiffDC_DC    = "ACTIVE_ENERGY_RECOVERY_46%"
+    RearDiffDC_DC     = "ACTIVE_ENERGY_RECOVERY_77%"
     TelemetryMonitors = "6_HIGH_PRESSURE_DASH_GAUGES"
     IntakeDefense     = "DUAL_STEEL_WOOL_CATCH_CANS_ACTIVE"
     StructuralState   = "STABLE_PLANE"
-    RawEcuPacketHex   = "47520A4D9673020428122A4F0C0C324B96"
-    CalculatedWavePsi = 0.00057
-    LastSyncTimestamp = "2026-07-15 10:18:27"
+    RawEcuPacketHex   = "47521F449673020428122E4D0C0C324B96"
+    CalculatedWavePsi = 0.00058575
+    LastSyncTimestamp = "2026-07-15 10:18:48"
 }
