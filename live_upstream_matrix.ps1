@@ -16,7 +16,7 @@ $ImmunityTelemetry = [PSCustomObject]@{
     TelemetryMonitors = "6_HIGH_PRESSURE_DASH_GAUGES"
     IntakeDefense     = "DUAL_STEEL_WOOL_CATCH_CANS_ACTIVE"
     StructuralState   = "STABLE_PLANE"
-    RawEcuPacketHex   = "475224489673020428122F4E0C0C324B96"
-    CalculatedWavePsi = 0.0005895
-    LastSyncTimestamp = "2026-07-15 10:21:38"
+    RawEcuPacketHex   = "475221489673020428122F4E0C0C324B96"
+    CalculatedWavePsi = 0.00058725
+    LastSyncTimestamp = "2026-07-15 10:21:59"
 }
